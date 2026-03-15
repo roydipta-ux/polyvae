@@ -290,9 +290,9 @@ with tab1:
     axes[2].tick_params(labelsize=8)
 
     plt.tight_layout()
-    st.pyplot(fig,use_container_width=True); plt.close()
+    st.pyplot(fig,width="stretch"); plt.close()
     st.dataframe(df[['family']+PHYS_COLS+['log_sigma']].head(10),
-                 use_container_width=True)
+                 width="stretch")
 
 # ── TAB 2: LATENT SPACE ────────────────────────────────────────────────────────
 with tab2:
@@ -313,7 +313,7 @@ with tab2:
         axes[2].legend(fontsize=8)
         for ax in axes: ax.set_title(ax.get_title(),fontweight='bold',fontsize=9)
         plt.tight_layout()
-        st.pyplot(fig,use_container_width=True); plt.close()
+        st.pyplot(fig,width="stretch"); plt.close()
 
     with col2:
         st.markdown("**PCA of Latent Space**")
@@ -327,7 +327,7 @@ with tab2:
                title='Latent Space — coloured by family')
         ax.legend(fontsize=7,ncol=2)
         plt.tight_layout()
-        st.pyplot(fig,use_container_width=True); plt.close()
+        st.pyplot(fig,width="stretch"); plt.close()
 
     st.info("✅ VAE Reconstruction R² = **" + f"{M['recon_r2']:.3f}**  "
             "→ The VAE has learned a structured polymer representation.")
@@ -362,7 +362,7 @@ with tab3:
     axes[1].legend(fontsize=8)
 
     plt.tight_layout()
-    st.pyplot(fig,use_container_width=True); plt.close()
+    st.pyplot(fig,width="stretch"); plt.close()
 
     c1,c2,c3=st.columns(3)
     c1.metric("Generated",      "200 polymers")
@@ -406,7 +406,7 @@ with tab4:
                      f'{v:.3f}',ha='center',fontsize=10,fontweight='bold')
 
     plt.tight_layout()
-    st.pyplot(fig,use_container_width=True); plt.close()
+    st.pyplot(fig,width="stretch"); plt.close()
 
     st.success(f"✅ Top driver: **{FEAT_LBL.get(imp_df.iloc[0]['feat'],imp_df.iloc[0]['feat'])}** "
                f"(importance = {imp_df.iloc[0]['imp']:.4f})  — consistent with Marcus transport theory.")
@@ -439,7 +439,7 @@ with tab5:
         X_new_full = np.hstack([X_new,
                                 np.zeros((1, 64), dtype=np.float32)])
         _,_,z_new = M['vae'].latent(X_new_full.astype(np.float32))
-        pred = float(M['models']['GBM-latent']['model'].predict(z_new))
+        pred = float(M['models']['GBM-latent']['model'].predict(z_new)[0])
 
         if pred > 9:   status = "🟢 EXCELLENT"
         elif pred > 7: status = "🟡 GOOD"
@@ -459,7 +459,7 @@ with tab5:
         ax.set(xlim=(0,14),yticks=[],xlabel='log₁₀(σ) [S/cm]')
         ax.text(pred,0.35,f'{pred:.2f}',ha='center',fontsize=10,fontweight='bold')
         plt.tight_layout()
-        st.pyplot(fig,use_container_width=True); plt.close()
+        st.pyplot(fig,width="stretch"); plt.close()
 
         st.info("**Physics check:**  π-conjugation drives conductivity via Marcus hopping. "
                 "High π-conjugation + low disorder + low HOMO-LUMO gap = best conductors.")
